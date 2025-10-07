@@ -1,0 +1,42 @@
+﻿@model IEnumerable<ProyectoCatedraDES.Models.UserListItemVM>
+@{
+    ViewData["Title"] = "Usuarios";
+}
+
+<h2 class="mb-3">Usuarios</h2>
+
+@if (TempData["Ok"] is string ok)
+{
+    <div class="alert alert-success">@ok</div>
+}
+
+<table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Roles</th>
+            <th class="text-nowrap">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var u in Model)
+        {
+            <tr>
+                <td>@u.Email</td>
+                <td>
+                    @if (u.Roles.Any())
+                    {
+                        @string.Join(", ", u.Roles)
+                    }
+                    else
+                    {
+                        <span class="text-muted">Sin rol</span>
+                    }
+                </td>
+                <td class="text-nowrap">
+                    <a class="btn btn-sm btn-outline-primary" asp-action="EditRoles" asp-route-id="@u.Id">Editar roles</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
