@@ -1,0 +1,71 @@
+﻿@model IEnumerable<ProyectoCatedraDES.Models.MovimientoInventario>
+@{
+    ViewData["Title"] = "Movimientos";
+    var productoId = (string?)Context.Request.Query["productoId"];
+}
+
+<h2 class="mb-3">Movimientos</h2>
+
+<p class="mb-3 d-flex gap-2">
+    <a class="btn btn-outline-success"
+       asp-action="ExportarExcel"
+       asp-route-productoId="@productoId">Exportar Excel</a>
+
+    <a class="btn btn-outline-danger"
+       asp-action="ExportarPdf"
+       asp-route-productoId="@productoId">Exportar PDF</a>
+
+    <a class="btn btn-secondary ms-auto"
+       asp-controller="Productos" asp-action="Index">Volver a productos</a>
+</p>
+
+@if (!string.IsNullOrEmpty(productoId))
+{
+    <div class="alert alert-info py-2">
+        Mostrando movimientos del <strong>producto #@productoId</strong>.
+        <a asp-action="Index" class="alert-link ms-2">Ver todos</a>
+    </div>
+}
+
+@if (!Model.Any())
+{
+    <div class="alert alert-light border">No hay movimientos para mostrar.</div>
+}
+else
+{
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Producto</th>
+                <th>Tipo</th>
+                <th class="text-end">Cantidad</th>
+                <th>Usuario</th>
+                <th>Comentario</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var m in Model)
+            {
+                var isEntrada = m.Tipo == ProyectoCatedraDES.Models.TipoMovimiento.Entrada;
+                <tr>
+                    <td>@m.Fecha.ToLocalTime().ToString("g")</td>
+                    <td>@m.Producto?.Nombre</td>
+                    <td>
+                        @if (isEntrada)
+                        {
+                            <span class="badge bg-success">Entrada</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-warning text-dark">Salida</span>
+                        }
+                    </td>
+                    <td class="text-end">@m.Cantidad</td>
+                    <td>@m.UsuarioId</td>
+                    <td>@m.Comentario</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

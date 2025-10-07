@@ -1,0 +1,28 @@
+﻿@model ProyectoCatedraDES.Models.MovimientoCreateVM
+@{
+    ViewData["Title"] = "Registrar Salida";
+}
+
+<h2>@ViewData["Title"]</h2>
+<p><strong>Producto:</strong> @Model.ProductoNombre</p>
+
+<form asp-action="CrearSalida" method="post">
+    <div class="mb-3">
+        <label class="form-label">Cantidad</label>
+        <input asp-for="Cantidad" class="form-control" />
+        <span asp-validation-for="Cantidad" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Comentario</label>
+        <input asp-for="Comentario" class="form-control" />
+    </div>
+
+    <input type="hidden" asp-for="ProductoId" />
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a asp-action="Index" class="btn btn-secondary">Volver</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,35 @@
+﻿@model IEnumerable<ProyectoCatedraDES.Models.Producto>
+@{
+    ViewData["Title"] = "Alertas de Stock";
+}
+
+<h2>Alertas de Stock</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">Sin alertas por ahora.</div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Producto</th>
+                <th class="text-end">Stock</th>
+                <th class="text-end">Mínimo</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model)
+            {
+                <tr class="table-danger">
+                    <td>@p.Codigo</td>
+                    <td>@p.Nombre</td>
+                    <td class="text-end">@p.StockActual</td>
+                    <td class="text-end">@p.StockMinimo</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
