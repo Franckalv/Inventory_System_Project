@@ -6,7 +6,7 @@
 ### Desarrollo de Software Empresarial Grupo Teórico 01T
 
 ### Proyecto de cátedra
-### Primer entrega
+### Entrega Final
 
 ## Integrantes:
 - Roberto Rodrigo López Alvarado - LA203000
@@ -15,7 +15,7 @@
 
 ## Documentación
 - Manual de Programador: https://github.com/Franckalv/Inventory_System_Project/blob/master/Documentation/MANUAL%20DE%20PROGRAMADOR%20-%20PROYECTO%20DES.pdf
-- Manual de usuario: 
+- Manual de usuario: https://github.com/Franckalv/Inventory_System_Project/blob/master/Documentation/MANUAL%20DE%20USUARIOS%20-%20PROYECTO%20DES.pdf
 
 ## Enlaces a:
 - Trello: https://trello.com/b/wCxxu5jo/des
