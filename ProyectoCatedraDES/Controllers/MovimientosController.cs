@@ -71,8 +71,10 @@ public class MovimientosController : Controller
         catch (InvalidOperationException ex)
         {
             ModelState.AddModelError(string.Empty, ex.Message);
+            ModelState.AddModelError(nameof(MovimientoCreateVM.Cantidad), ex.Message);
             return View(vm);
         }
+
     }
 
     // REPORTES

@@ -11,12 +11,16 @@ public class InventarioService : IInventarioService
 
     public async Task RegistrarEntradaAsync(int productoId, int cantidad, string? usuarioId, string? comentario = null)
     {
-        if (cantidad <= 0) throw new ArgumentException("La cantidad debe ser > 0");
+        // MENSAJE MÁS CLARO
+        if (cantidad <= 0) throw new InvalidOperationException("La cantidad debe ser mayor a cero.");
+
         var prod = await _db.Productos.FirstOrDefaultAsync(p => p.Id == productoId)
-                   ?? throw new InvalidOperationException("Producto no encontrado");
+                   ?? throw new InvalidOperationException("Producto no encontrado.");
 
         using var tx = await _db.Database.BeginTransactionAsync();
+
         prod.StockActual += cantidad;
+
         _db.Movimientos.Add(new MovimientoInventario
         {
             ProductoId = productoId,
@@ -26,20 +30,28 @@ public class InventarioService : IInventarioService
             Comentario = comentario,
             Fecha = DateTime.UtcNow
         });
+
         await _db.SaveChangesAsync();
         await tx.CommitAsync();
     }
 
     public async Task RegistrarSalidaAsync(int productoId, int cantidad, string? usuarioId, string? comentario = null)
     {
-        if (cantidad <= 0) throw new ArgumentException("La cantidad debe ser > 0");
+        // MENSAJE MÁS CLARO
+        if (cantidad <= 0) throw new InvalidOperationException("La cantidad debe ser mayor a cero.");
+
         var prod = await _db.Productos.FirstOrDefaultAsync(p => p.Id == productoId)
-                   ?? throw new InvalidOperationException("Producto no encontrado");
+                   ?? throw new InvalidOperationException("Producto no encontrado.");
 
         using var tx = await _db.Database.BeginTransactionAsync();
-        if (prod.StockActual < cantidad) throw new InvalidOperationException("Stock insuficiente");
+
+        // <<< AQUÍ EL MENSAJE QUE VERÁ EL USUARIO >>>
+        if (prod.StockActual < cantidad)
+            throw new InvalidOperationException(
+                $"Stock insuficiente. Disponible: {prod.StockActual}, solicitado: {cantidad}.");
 
         prod.StockActual -= cantidad;
+
         _db.Movimientos.Add(new MovimientoInventario
         {
             ProductoId = productoId,
@@ -49,6 +61,7 @@ public class InventarioService : IInventarioService
             Comentario = comentario,
             Fecha = DateTime.UtcNow
         });
+
         await _db.SaveChangesAsync();
         await tx.CommitAsync();
     }

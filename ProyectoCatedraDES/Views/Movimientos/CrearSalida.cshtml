@@ -1,26 +1,30 @@
 ﻿@model ProyectoCatedraDES.Models.MovimientoCreateVM
 @{
-    ViewData["Title"] = "Registrar Salida";
+    ViewData["Title"] = "Registrar salida";
 }
 
-<h2>@ViewData["Title"]</h2>
-<p><strong>Producto:</strong> @Model.ProductoNombre</p>
+<h3 class="mb-3">Salida — @Model.ProductoNombre</h3>
 
-<form asp-action="CrearSalida" method="post">
+<!-- Summary visible para errores del ModelState -->
+<div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+<form asp-action="CrearSalida" method="post" novalidate>
+    <input type="hidden" asp-for="ProductoId" />
+
     <div class="mb-3">
-        <label class="form-label">Cantidad</label>
+        <label asp-for="Cantidad" class="form-label"></label>
         <input asp-for="Cantidad" class="form-control" />
         <span asp-validation-for="Cantidad" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
-        <label class="form-label">Comentario</label>
+        <label asp-for="Comentario" class="form-label"></label>
         <input asp-for="Comentario" class="form-control" />
+        <span asp-validation-for="Comentario" class="text-danger"></span>
     </div>
 
-    <input type="hidden" asp-for="ProductoId" />
-    <button type="submit" class="btn btn-primary">Guardar</button>
-    <a asp-action="Index" class="btn btn-secondary">Volver</a>
+    <button type="submit" class="btn btn-warning">Registrar salida</button>
+    <a asp-action="Index" asp-route-productoId="@Model.ProductoId" class="btn btn-secondary ms-2">Cancelar</a>
 </form>
 
 @section Scripts {
