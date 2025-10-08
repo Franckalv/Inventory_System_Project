@@ -8,14 +8,14 @@ namespace ProyectoCatedraDES.Models
     {
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "El producto es obligatorio.")]
         public int ProductoId { get; set; }
         public Producto? Producto { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "El tipo de movimiento es obligatorio.")]
         public TipoMovimiento Tipo { get; set; }
 
-        [Range(1, int.MaxValue)]
+        [Range(1, int.MaxValue, ErrorMessage = "La cantidad debe ser mayor a cero.")]
         public int Cantidad { get; set; }
 
         public DateTime Fecha { get; set; } = DateTime.UtcNow;
